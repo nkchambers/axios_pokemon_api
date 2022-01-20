@@ -1,14 +1,21 @@
 import './App.css';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
 function App() {
 
-
   //---------------------STATE VARIABLES--------------------------
-
   const [pokemon, setPokemon] = useState([])
 
+
+  //useEffect function - purpose >>> after component has mounted and rendered >>> then execute anything inside this function
+  useEffect( ()=> {
+      // axiosPokemon();
+  }, []) // never put same state variable in [] b/c useEffect will re-trigger
+
+
+
+  //Fetch Pokemon Function
   const fetchPokemon = () => {
 
     // Vanilla JS Fetch - Prior ES7 syntax - Long Way
@@ -25,7 +32,6 @@ function App() {
 
     //NEW ES7 syntax - Short Way
     //let response = await fetch("http://www.example.com");
-
   }
 
 
@@ -67,6 +73,7 @@ function App() {
 
         <tbody>
           {
+            pokemon ?
             pokemon.map((poke, idx) => {
               return (
                 <tr key={idx}>
@@ -74,7 +81,7 @@ function App() {
                   <td>{poke.url}</td>
                 </tr>
               )
-            })
+            }) : <p>loading</p>
           }  
         </tbody>
       </table>
